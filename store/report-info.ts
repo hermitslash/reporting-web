@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ResponseAsTypes, mande } from 'mande';
+import { mande } from 'mande';
 import {
   AuthenticatedUser,
   CompanyInfo,
@@ -8,6 +8,7 @@ import {
   ReportInfoData,
 } from '~/utils/models';
 import { useAuthStore } from './auth';
+import { toast } from 'vue3-toastify';
 export const useReportInfoStore = defineStore('reportInfoStore', {
   state: () => ({
     companyInfo: {} as CompanyInfo,
@@ -39,7 +40,6 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
         reportInfoData.reportData.customerId = (
           authStore.getUserInfo as AuthenticatedUser
         ).companyName;
-        console.log(reportInfoData);
         // const initiatedReport = await reportInfoInitiate.post<ReportInfoData>(
         //   reportInfoData,
         //   {
@@ -48,6 +48,8 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
         //     },
         //   }
         // );
+        toast.info('Added ReportInfo');
+        console.log(reportInfoData);
       } catch (err) {
         console.error(err);
       }
@@ -76,7 +78,6 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
         const reportInfoURL = `http://localhost:9809/api/reporting-svc/reportInfo?invoiceNo=${encodeURIComponent(
           invoiceNo
         )}`;
-        console.log(reportInfoURL);
         const reportInfo = mande(reportInfoURL);
         this.reportInfoById = await reportInfo.get({
           headers: {
@@ -101,6 +102,9 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
           },
           responseAs: 'response',
         });
+        if (fileResourceResp.status === 200) {
+          toast.info('File downloaded, Please check your downloads folder.');
+        }
       } catch (err) {
         console.error(err);
       }

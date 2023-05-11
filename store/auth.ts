@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { mande } from 'mande';
 import { AuthenticatedUser, AuthenticationResponse } from '~/utils/models';
+import { toast } from 'vue3-toastify';
 const authLogin = mande('http://localhost:9809/api/auth/token');
 const isValidToken = mande('http://localhost:9809/api/auth/token/validate');
 const authUser = mande('http://localhost:9809/api/auth/userinfo');
