@@ -148,3 +148,10 @@ export class ApplicableGst {
     public percentageApplicable: number
   ) {}
 }
+export class EndOfDayTransaction {
+  constructor(
+    public customerId: string,
+    public amountInfo: number,
+    public currentDate: string
+  ) {}
+}

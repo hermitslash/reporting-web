@@ -9,6 +9,12 @@ export default defineNuxtConfig({
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
   },
+  router: {
+    options: {
+      linkActiveClass: 'active',
+      linkExactActiveClass: 'exact-active',
+    },
+  },
   piniaPersistedstate: {
     cookieOptions: {
       sameSite: 'strict',
@@ -17,4 +23,5 @@ export default defineNuxtConfig({
   formkit: {
     configFile: './formkit.config.ts',
   },
+  ssr: true,
 });

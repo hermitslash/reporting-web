@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 const formKitTailwind = require('@formkit/themes/tailwindcss');
+const colors = require('tailwindcss/colors');
 export const darkMode = 'class';
 export const content = [
   './components/**/*.{js,vue,ts}',
@@ -9,6 +10,7 @@ export const content = [
   './nuxt.config.{js,ts}',
   './node_modules/flowbite.{js,ts}',
   './node_modules/@formkit/themes/dist/tailwindcss/genesis/index.cjs',
+  './node_modules/vue-tailwind-datepicker/**/*.js',
 ];
 export const theme = {
   extend: {
@@ -23,6 +25,8 @@ export const theme = {
       },
     },
     colors: {
+      'vtd-primary': colors.sky, // Light mode Datepicker color
+      'vtd-secondary': colors.gray, // Dark mode Datepicker color
       primary: {
         50: '#eff6ff',
         100: '#dbeafe',
@@ -75,4 +79,8 @@ export const theme = {
   },
 };
 
-export const plugins = [require('flowbite/plugin'), formKitTailwind];
+export const plugins = [
+  '@tailwindcss/forms',
+  require('flowbite/plugin'),
+  formKitTailwind,
+];

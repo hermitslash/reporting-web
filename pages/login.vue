@@ -82,7 +82,7 @@ const credentials = reactive({
 });
 
 const signin = async () => {
-  await authStore.login(credentials.username, credentials.password);
+   authStore.login(credentials.username, credentials.password);
 };
 onMounted(() => {
   if (authStore.getAccessToken !== '') {

@@ -8,10 +8,20 @@
   </div>
 </template>
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, onBeforeUpdated } from 'vue';
 import { initFlowbite } from 'flowbite';
-onMounted(() => {
+import { useAuthStore } from './store/auth';
+const authStore = useAuthStore();
+onMounted(async () => {
   initFlowbite();
+  if(!authStore.getIsValidToken) {
+    await authStore.logout();
+  }
+});
+onBeforeUpdated(async () => {
+  if(!authStore.getIsValidToken) {
+    await authStore.logout();
+  }
 });
 </script>
 <style>

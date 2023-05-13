@@ -1,22 +1,21 @@
 <template>
   <section>
-    <p class="text-2xl font-bold">
-      Welcome to the dashboard! {{ lastName }}, {{ firstName }}
+    <p class="text-xl font-medium text-primary-400">
+      Welcome to the dashboard! {{ firstName }}, {{ lastName }}
     </p>
-    <ReportInformation />
+    <p class="text-lg font-medium text-primary-400">Please head to the services section by clicking on the <span class="text-primary-300">Services</span> link to Add/View/Download report information.</p>
+    <p class="text-lg font-medium text-primary-400">From the services section you will also be able to read the end of day transaction information by providing a valid date.</p>
   </section>
 </template>
 <script setup>
 import { useAuthStore } from '~/store/auth';
-import { useReportInfoStore } from '~/store/report-info';
 definePageMeta({
   middleware: 'auth',
 });
 
 const authStore = useAuthStore();
-const reportDataStore = useReportInfoStore();
 const userInfo = authStore.getUserInfo;
 const lastName = userInfo.lastName;
 const firstName = userInfo.firstName;
-const initiateReportInfo = () => reportDataStore.initiateReportData();
+
 </script>

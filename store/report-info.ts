@@ -3,62 +3,66 @@ import { mande } from 'mande';
 import {
   AuthenticatedUser,
   CompanyInfo,
+  EndOfDayTransaction,
   Particular,
   ReportInfo,
   ReportInfoData,
 } from '~/utils/models';
+import {
+  initiateReportURL,
+  allReportInfoURL,
+  findReportInfoURL,
+  downloadReportURL,
+  eodtURL,
+} from '~/utils/commonutils';
 import { useAuthStore } from './auth';
 import { toast } from 'vue3-toastify';
 export const useReportInfoStore = defineStore('reportInfoStore', {
   state: () => ({
-    companyInfo: {} as CompanyInfo,
+    companyInfos: [] as CompanyInfo[],
     particulars: [] as Particular[],
     reportInfoData: {} as ReportInfoData,
     reportInfos: [] as ReportInfo[],
     reportInfoById: {} as ReportInfo,
+    endOfDayTransaction: {} as EndOfDayTransaction,
   }),
   persist: true,
   actions: {
     clearReportInfo() {
-      this.companyInfo = {} as CompanyInfo;
+      this.companyInfos = [];
       this.particulars = [];
       this.reportInfoData = {} as ReportInfoData;
       this.reportInfos = [];
     },
     addCompanyInfo(ci: CompanyInfo) {
-      this.companyInfo = ci;
+      this.companyInfos.push(ci);
     },
     addParticular(particular: Particular) {
       this.particulars.push(particular);
     },
     async initiateReportData(reportInfoData: ReportInfoData) {
-      const reportInfoInitiate = mande(
-        'http://localhost:9809/api/reporting-svc/reportInfoData/initiate'
-      );
+      const reportInfoInitiate = mande(initiateReportURL);
       const authStore = useAuthStore();
       try {
         reportInfoData.reportData.customerId = (
           authStore.getUserInfo as AuthenticatedUser
         ).companyName;
-        // const initiatedReport = await reportInfoInitiate.post<ReportInfoData>(
-        //   reportInfoData,
-        //   {
-        //     headers: {
-        //       Authorization: `Bearer ${authStore.getAccessToken}`,
-        //     },
-        //   }
-        // );
+        const initiatedReport = await reportInfoInitiate.post<ReportInfoData>(
+          reportInfoData,
+          {
+            headers: {
+              Authorization: `Bearer ${authStore.getAccessToken}`,
+            },
+          }
+        );
         toast.info('Added ReportInfo');
-        console.log(reportInfoData);
       } catch (err) {
-        console.error(err);
+        toast.error('Unable to add');
       }
     },
     async findAllReportInfos() {
       try {
-        const reportInfoList = mande(
-          'http://localhost:9809/api/reporting-svc/reportInfos'
-        );
+        const reportInfoList = mande(allReportInfoURL);
         const authStore = useAuthStore();
         const allReportInfo = await reportInfoList.get<ReportInfo[]>({
           headers: {
@@ -75,9 +79,7 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
     async findReportInfoByInvoiceNo(invoiceNo: string) {
       try {
         const authStore = useAuthStore();
-        const reportInfoURL = `http://localhost:9809/api/reporting-svc/reportInfo?invoiceNo=${encodeURIComponent(
-          invoiceNo
-        )}`;
+        const reportInfoURL = findReportInfoURL + encodeURIComponent(invoiceNo);
         const reportInfo = mande(reportInfoURL);
         this.reportInfoById = await reportInfo.get({
           headers: {
@@ -88,11 +90,29 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
         console.error(err);
       }
     },
+    async findEndOfDayTransaction(currentDate: string) {
+      try {
+        const authStore = useAuthStore();
+        const eodt = await mande(eodtURL + currentDate).get({
+          headers: {
+            Authorization: `Bearer ${authStore.getAccessToken}`,
+            customerId: (authStore.getUserInfo as AuthenticatedUser)
+              .companyName,
+          },
+        });
+        this.endOfDayTransaction = new EndOfDayTransaction(
+          (authStore.getUserInfo as AuthenticatedUser).companyName,
+          eodt as number,
+          currentDate
+        );
+      } catch (err) {
+        console.error(err);
+      }
+    },
     async downloadReportInfoData(invoiceNo: string) {
       const authStore = useAuthStore();
       const downloadReportInfo = mande(
-        'http://localhost:9809/api/reporting-svc/download/reportInfo?invoiceNo=' +
-          encodeURIComponent(invoiceNo)
+        downloadReportURL + encodeURIComponent(invoiceNo)
       );
       try {
         const fileResourceResp = await downloadReportInfo.get({
@@ -111,10 +131,11 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
     },
   },
   getters: {
-    getCompanyInfo: (state) => state.companyInfo,
+    getCompanyInfos: (state) => state.companyInfos,
     getParticulars: (state) => state.particulars,
     getReportInfoData: (state) => state.reportInfoData,
     getReportInfos: (state) => state.reportInfos,
     getReportInfoById: (state) => state.reportInfoById,
+    getEndOfDayTransaction: (state) => state.endOfDayTransaction,
   },
 });
