@@ -41,7 +41,7 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
       this.particulars.push(particular);
     },
     async initiateReportData(reportInfoData: ReportInfoData) {
-      const reportInfoInitiate = mande(initiateReportURL);
+      const reportInfoInitiate = mande(initiateReportURL + '');
       const authStore = useAuthStore();
       try {
         reportInfoData.reportData.customerId = (
@@ -62,7 +62,7 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
     },
     async findAllReportInfos() {
       try {
-        const reportInfoList = mande(allReportInfoURL);
+        const reportInfoList = mande(allReportInfoURL + '');
         const authStore = useAuthStore();
         const allReportInfo = await reportInfoList.get<ReportInfo[]>({
           headers: {
@@ -93,13 +93,15 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
     async findEndOfDayTransaction(currentDate: string) {
       try {
         const authStore = useAuthStore();
-        const eodt = await mande(eodtURL + currentDate).get({
-          headers: {
-            Authorization: `Bearer ${authStore.getAccessToken}`,
-            customerId: (authStore.getUserInfo as AuthenticatedUser)
-              .companyName,
-          },
-        });
+        const eodt = await mande(eodtURL + encodeURIComponent(currentDate)).get(
+          {
+            headers: {
+              Authorization: `Bearer ${authStore.getAccessToken}`,
+              customerId: (authStore.getUserInfo as AuthenticatedUser)
+                .companyName,
+            },
+          }
+        );
         this.endOfDayTransaction = new EndOfDayTransaction(
           (authStore.getUserInfo as AuthenticatedUser).companyName,
           eodt as number,

@@ -6,9 +6,7 @@ import {
   authTokenValidateURL,
   userInfoURL,
 } from '~/utils/commonutils';
-const authLogin = mande(authTokenURL);
-const isValidToken = mande(authTokenValidateURL);
-const authUser = mande(userInfoURL);
+
 export const useAuthStore = defineStore('authStore', {
   state: () => ({
     access_token: '',
@@ -18,6 +16,8 @@ export const useAuthStore = defineStore('authStore', {
   persist: true,
   actions: {
     async login(username: string, password: string) {
+      const authLogin = mande(authTokenURL + '');
+      const authUser = mande(userInfoURL + '');
       const makeAuthToken: AuthenticationResponse = await authLogin.post({
         username: username,
         password: password,
@@ -34,6 +34,7 @@ export const useAuthStore = defineStore('authStore', {
       }
     },
     async validateToken() {
+      const isValidToken = mande(authTokenValidateURL + '');
       const isValidTokenResp: AuthenticationResponse =
         await isValidToken.get<AuthenticationResponse>({
           headers: { Authorization: `Bearer ${this.getAccessToken}` },

@@ -10,7 +10,6 @@
                     name="companyName"
                     label="Company Name"
                     id="companyName"
-                    input-class="block bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="Company Name"
                     validation="required|length:3"
                   />
@@ -18,7 +17,6 @@
                     type="email"
                     name="emailAddress"
                     id="emailAddress"
-                    input-class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     validation="required|email"
                     label="Email Address"
                     placeholder="Email Address"
@@ -27,7 +25,6 @@
                     type="tel"
                     name="phoneNumber"
                     id="phoneNumber"
-                    input-class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     validation="required|matches:/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/|length:10"
                     label="Phone Number"
                     placeholder="xxx-xxx-xxxx"
@@ -36,7 +33,6 @@
                     type="text"
                     name="gstNo"
                     id="gstNo"
-                    input-class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     validation="required|length:15|alphanumeric"
                     label="GST No"
                     placeholder="29AAAAACCCB1AG"
@@ -45,7 +41,6 @@
                     type="text"
                     name="panNo"
                     id="panNo"
-                    input-class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     validation="required|length:10|alphanumeric"
                     label="PAN No"
                     placeholder="AAAAAAAAAA"
@@ -54,7 +49,6 @@
                     type="textarea"
                     name="addressLine"
                     id="addressLine"
-                    input-class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     rows="10"
                     label="Address Line"
                     validation="required"
@@ -64,7 +58,6 @@
                     type="text"
                     name="pinCode"
                     id="pinCode"
-                    input-class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     validation="required|length:6|number"
                     label="Pincode"
                     placeholder="577204"
@@ -164,7 +157,7 @@
                 </FormKit>
               </FormKit>
             </div>
-            <div>
+            <div class="w-full max-w-md">
               <p class="text-lg font-medium">Some Instructions.</p>
               <ul>
                 <li class="font-thin first-letter:capitalize text-red-500">All Fields are mandatory.</li>

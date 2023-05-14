@@ -12,10 +12,11 @@ import { onMounted } from 'vue';
 import { initFlowbite } from 'flowbite';
 import { useAuthStore } from './store/auth';
 const authStore = useAuthStore();
-onMounted(async () => {
+onMounted(() => {
   initFlowbite();
+  authStore.validateToken();
   if(!authStore.getIsValidToken) {
-    await authStore.logout();
+    authStore.logout();
   }
 });
 </script>
