@@ -8,17 +8,12 @@
   </div>
 </template>
 <script setup>
-import { onMounted, onBeforeUpdated } from 'vue';
+import { onMounted } from 'vue';
 import { initFlowbite } from 'flowbite';
 import { useAuthStore } from './store/auth';
 const authStore = useAuthStore();
 onMounted(async () => {
   initFlowbite();
-  if(!authStore.getIsValidToken) {
-    await authStore.logout();
-  }
-});
-onBeforeUpdated(async () => {
   if(!authStore.getIsValidToken) {
     await authStore.logout();
   }
