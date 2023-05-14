@@ -30,7 +30,7 @@ export const useAuthStore = defineStore('authStore', {
         });
         this.user = makeAuthUser;
         this.isTokenValid = true;
-        navigateTo('/');
+        navigateTo('/reportInfos');
       }
     },
     async validateToken() {
