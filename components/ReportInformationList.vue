@@ -34,7 +34,7 @@
         <tbody>
           <tr
             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-            v-for="rInfo in reportInfoStore.getReportInfos"
+            v-for="rInfo in reportInfos"
           >
             <!-- <td class="w-4 p-4">
               <div class="flex items-center">
@@ -83,9 +83,12 @@
   </div>
 </template>
 <script setup>
+import { storeToRefs } from 'pinia';
 import { useReportInfoStore } from '~/store/report-info';
 const reportInfoStore = useReportInfoStore();
+const reportInfoStoreRefs = storeToRefs(reportInfoStore);
 reportInfoStore.findAllReportInfos();
+const reportInfos = reportInfoStoreRefs.reportInfos;
 const downloadReport = (invoiceNo) =>
    reportInfoStore.downloadReportInfoData(invoiceNo);
 </script>

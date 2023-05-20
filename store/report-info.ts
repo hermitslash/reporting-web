@@ -36,7 +36,7 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
     async initiateReportData(reportInfoData: ReportInfoData) {
       const runtimeConfig = useRuntimeConfig();
       const reportInfoInitiate = mande(
-        runtimeConfig.public.INITIATE_REPORT_URL + ''
+        runtimeConfig.public.INITIATE_REPORT_URL
       );
       const authStore = useAuthStore();
       try {
@@ -59,9 +59,7 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
     async findAllReportInfos() {
       const runtimeConfig = useRuntimeConfig();
       try {
-        const reportInfoList = mande(
-          runtimeConfig.public.ALL_REPORT_INFOS_URL + ''
-        );
+        const reportInfoList = mande(runtimeConfig.public.ALL_REPORT_INFOS_URL);
         const authStore = useAuthStore();
         const allReportInfo = await reportInfoList.get<ReportInfo[]>({
           headers: {

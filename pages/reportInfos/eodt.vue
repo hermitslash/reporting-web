@@ -37,10 +37,12 @@
 import { useReportInfoStore } from '~/store/report-info';
 import { toast } from 'vue3-toastify';
 import dayjs from 'dayjs';
+import { storeToRefs } from 'pinia';
 definePageMeta({
   middleware: 'auth',
 });
 const reportInfoStore = useReportInfoStore();
+const reportInfoStoreRefs = storeToRefs(reportInfoStore);
 const currDate = reactive({
   today: '',
   endOfDayTransc: null,
@@ -51,7 +53,7 @@ const eodts = async () => {
     toast.warning('Please select a valid date!');
   } else {
     await reportInfoStore.findEndOfDayTransaction(currDate.today);
-    currDate.endOfDayTransc = reportInfoStore.getEndOfDayTransaction;
+    currDate.endOfDayTransc = reportInfoStoreRefs.getEndOfDayTransaction;
     if (currDate.endOfDayTransc.amountInfo == 0) {
       currDate.endOfDayTransc = null;
       toast.warning('No information for selected date.');

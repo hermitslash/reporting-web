@@ -28,7 +28,7 @@
             <tbody>
               <tr
                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                v-for="(particular, index) in particulars"
+                v-for="(particular, index) in reportInfoById.particulars"
                 :key="index"
               >
                 <th
@@ -73,7 +73,7 @@
             <tbody>
               <tr
                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                v-for="(gst, index) in gstAmounts"
+                v-for="(gst, index) in reportInfoById.applicableGsts"
                 :key="index"
               >
                 <th
@@ -114,11 +114,7 @@
                 </th>
                 <td class="px-6 py-4">
                   {{
-                    toRupee(
-                       reportInfoById.applicableGsts.reduce(
-                        (a, b) => a.amountInfo + b.amountInfo
-                      )
-                    )
+                    toRupee(reportInfoById.applicableGsts.reduce((a, b) => a.amountInfo + b.amountInfo))
                   }}
                 </td>
               </tr>
@@ -212,14 +208,12 @@
   </section>
 </template>
 <script setup>
+import { storeToRefs } from 'pinia';
 import { useReportInfoStore } from '~/store/report-info';
 const route = useRoute();
 const invoiceNo = route.params.id;
 const reportInfoStore = useReportInfoStore();
+const reportInfoStoreRefs = storeToRefs(reportInfoStore);
 reportInfoStore.findReportInfoByInvoiceNo(invoiceNo);
-const reportInfoById = reportInfoStore.getReportInfoById;
-const particulars = reportInfoById.particulars;
-const gstAmounts = reportInfoById.applicableGsts;
-
-
+const reportInfoById = reportInfoStoreRefs.reportInfoById;
 </script>
