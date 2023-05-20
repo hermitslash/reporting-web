@@ -115,7 +115,7 @@
                 <td class="px-6 py-4">
                   {{
                     toRupee(
-                      reportInfoById.applicableGsts.reduce(
+                       reportInfoById.applicableGsts.reduce(
                         (a, b) => a.amountInfo + b.amountInfo
                       )
                     )
@@ -223,4 +223,5 @@ const gstAmounts = reportInfoById.applicableGsts;
 onMounted(() => {
   reportInfoStore.findReportInfoByInvoiceNo(invoiceNo);
 });
+
 </script>

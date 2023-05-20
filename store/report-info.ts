@@ -84,7 +84,7 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
         const reportInfo = mande(reportInfoURL);
         this.reportInfoById = await reportInfo.get({
           query: {
-            invoiceNo: encodeURIComponent(invoiceNo)
+            invoiceNo: invoiceNo,
           },
           headers: {
             Authorization: `Bearer ${authStore.getAccessToken}`,
@@ -127,9 +127,9 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
       );
       try {
         const fileResourceResp = await downloadReportInfo.get({
-            query: {
-              invoiceNo: encodeURIComponent(invoiceNo)
-            },
+          query: {
+            invoiceNo: invoiceNo,
+          },
           headers: {
             Authorization: `Bearer ${authStore.getAccessToken}`,
             Accept: 'application/octet-stream',
