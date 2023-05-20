@@ -84,9 +84,8 @@
 </template>
 <script setup>
 import { useReportInfoStore } from '~/store/report-info';
-import {onMounted} from 'vue';
 const reportInfoStore = useReportInfoStore();
-onMounted(() => reportInfoStore.findAllReportInfos());
+reportInfoStore.findAllReportInfos();
 const downloadReport = (invoiceNo) =>
    reportInfoStore.downloadReportInfoData(invoiceNo);
 </script>

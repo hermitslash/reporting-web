@@ -1,7 +1,7 @@
 <template>
     <section>
         <p class="text-2xl font-light">Add Report Info</p>
-        <LazyNewReportInformation />
+        <NewReportInformation />
     </section>
 </template>
 <script setup>

@@ -1,5 +1,5 @@
 <template>
-  <LazyReportInformation />
+  <ReportInformation />
 </template>
 <script setup>
 definePageMeta({

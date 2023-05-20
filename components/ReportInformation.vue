@@ -212,16 +212,14 @@
   </section>
 </template>
 <script setup>
-import { onMounted } from 'vue';
 import { useReportInfoStore } from '~/store/report-info';
 const route = useRoute();
 const invoiceNo = route.params.id;
 const reportInfoStore = useReportInfoStore();
+reportInfoStore.findReportInfoByInvoiceNo(invoiceNo);
 const reportInfoById = reportInfoStore.getReportInfoById;
 const particulars = reportInfoById.particulars;
 const gstAmounts = reportInfoById.applicableGsts;
-onMounted(() => {
-  reportInfoStore.findReportInfoByInvoiceNo(invoiceNo);
-});
+
 
 </script>
