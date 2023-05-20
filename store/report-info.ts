@@ -8,13 +8,6 @@ import {
   ReportInfo,
   ReportInfoData,
 } from '~/utils/models';
-import {
-  initiateReportURL,
-  allReportInfoURL,
-  findReportInfoURL,
-  downloadReportURL,
-  eodtURL,
-} from '~/utils/commonutils';
 import { useAuthStore } from './auth';
 import { toast } from 'vue3-toastify';
 export const useReportInfoStore = defineStore('reportInfoStore', {
@@ -41,7 +34,10 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
       this.particulars.push(particular);
     },
     async initiateReportData(reportInfoData: ReportInfoData) {
-      const reportInfoInitiate = mande(initiateReportURL + '');
+      const runtimeConfig = useRuntimeConfig();
+      const reportInfoInitiate = mande(
+        runtimeConfig.public.INITIATE_REPORT_URL + ''
+      );
       const authStore = useAuthStore();
       try {
         reportInfoData.reportData.customerId = (
@@ -61,8 +57,11 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
       }
     },
     async findAllReportInfos() {
+      const runtimeConfig = useRuntimeConfig();
       try {
-        const reportInfoList = mande(allReportInfoURL + '');
+        const reportInfoList = mande(
+          runtimeConfig.public.ALL_REPORT_INFOS_URL + ''
+        );
         const authStore = useAuthStore();
         const allReportInfo = await reportInfoList.get<ReportInfo[]>({
           headers: {
@@ -77,11 +76,16 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
       }
     },
     async findReportInfoByInvoiceNo(invoiceNo: string) {
+      const runtimeConfig = useRuntimeConfig();
       try {
         const authStore = useAuthStore();
-        const reportInfoURL = findReportInfoURL + encodeURIComponent(invoiceNo);
+        const reportInfoURL =
+          runtimeConfig.public.REPORT_INFO_BY_INVOICE_NO_URL;
         const reportInfo = mande(reportInfoURL);
         this.reportInfoById = await reportInfo.get({
+          query: {
+            invoiceNo: encodeURIComponent(invoiceNo)
+          },
           headers: {
             Authorization: `Bearer ${authStore.getAccessToken}`,
           },
@@ -91,17 +95,21 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
       }
     },
     async findEndOfDayTransaction(currentDate: string) {
+      const runtimeConfig = useRuntimeConfig();
       try {
         const authStore = useAuthStore();
-        const eodt = await mande(eodtURL + encodeURIComponent(currentDate)).get(
-          {
-            headers: {
-              Authorization: `Bearer ${authStore.getAccessToken}`,
-              customerId: (authStore.getUserInfo as AuthenticatedUser)
-                .companyName,
-            },
-          }
-        );
+        const eodt = await mande(
+          runtimeConfig.public.END_OF_DAY_TRANCS_URL
+        ).get({
+          query: {
+            currentDate: encodeURIComponent(currentDate)
+          },
+          headers: {
+            Authorization: `Bearer ${authStore.getAccessToken}`,
+            customerId: (authStore.getUserInfo as AuthenticatedUser)
+              .companyName,
+          },
+        });
         this.endOfDayTransaction = new EndOfDayTransaction(
           (authStore.getUserInfo as AuthenticatedUser).companyName,
           eodt as number,
@@ -112,12 +120,16 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
       }
     },
     async downloadReportInfoData(invoiceNo: string) {
+      const runtimeConfig = useRuntimeConfig();
       const authStore = useAuthStore();
       const downloadReportInfo = mande(
-        downloadReportURL + encodeURIComponent(invoiceNo)
+        runtimeConfig.public.DOWNLOAD_REPORT_INFO_URL 
       );
       try {
         const fileResourceResp = await downloadReportInfo.get({
+            query: {
+              invoiceNo: encodeURIComponent(invoiceNo)
+            },
           headers: {
             Authorization: `Bearer ${authStore.getAccessToken}`,
             Accept: 'application/octet-stream',

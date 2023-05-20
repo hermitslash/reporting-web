@@ -1,11 +1,6 @@
 import { defineStore } from 'pinia';
 import { mande } from 'mande';
 import { AuthenticatedUser, AuthenticationResponse } from '~/utils/models';
-import {
-  authTokenURL,
-  authTokenValidateURL,
-  userInfoURL,
-} from '~/utils/commonutils';
 
 export const useAuthStore = defineStore('authStore', {
   state: () => ({
@@ -16,8 +11,9 @@ export const useAuthStore = defineStore('authStore', {
   persist: true,
   actions: {
     async login(username: string, password: string) {
-      const authLogin = mande(authTokenURL + '');
-      const authUser = mande(userInfoURL + '');
+      const runtimeConfig = useRuntimeConfig();
+      const authLogin = mande(runtimeConfig.public.AUTH_TOKEN_URL);
+      const authUser = mande(runtimeConfig.public.USER_INFO_URL);
       const makeAuthToken: AuthenticationResponse = await authLogin.post({
         username: username,
         password: password,
@@ -34,7 +30,8 @@ export const useAuthStore = defineStore('authStore', {
       }
     },
     async validateToken() {
-      const isValidToken = mande(authTokenValidateURL + '');
+      const runtimeConfig = useRuntimeConfig();
+      const isValidToken = mande(runtimeConfig.public.AUTH_TOKEN_VALIDATE_URL);
       const isValidTokenResp: AuthenticationResponse =
         await isValidToken.get<AuthenticationResponse>({
           headers: { Authorization: `Bearer ${this.getAccessToken}` },
