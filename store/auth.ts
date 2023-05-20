@@ -26,7 +26,7 @@ export const useAuthStore = defineStore('authStore', {
         });
         this.user = makeAuthUser;
         this.isTokenValid = true;
-        navigateTo('/reportInfos');
+        navigateTo('/');
       }
     },
     async validateToken() {
