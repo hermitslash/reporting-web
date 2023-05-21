@@ -8,12 +8,14 @@
   </section>
 </template>
 <script setup>
+import { storeToRefs } from 'pinia';
 import { useAuthStore } from '~/store/auth';
 definePageMeta({
   middleware: 'auth',
 });
 const authStore = useAuthStore();
-const isAuthenticated = authStore.getIsValidToken;
+const authStoreRefs = storeToRefs(authStore);
+const isAuthenticated = authStoreRefs.getIsValidToken;
 const userInfo = authStore.getUserInfo;
 const lastName = userInfo.lastName;
 const firstName = userInfo.firstName;
