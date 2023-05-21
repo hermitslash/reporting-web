@@ -28,7 +28,7 @@
                     validation="required|matches:/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/|length:10"
                     label="Phone Number"
                     placeholder="xxx-xxx-xxxx"
-                    help="Format - xxx-xxx-xxxx"
+                    help="Format - XXX-XXX-XXXX"
                   />
                   <FormKit
                     type="text"
