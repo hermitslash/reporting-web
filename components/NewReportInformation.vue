@@ -2,7 +2,7 @@
     <section class="text-primary-500">
       <div class="grid md:grid-cols-2 md:gap-4">
             <div>
-              <FormKit type="form" @submit="submitReportInfoData" submit-label="Submit Tax Invoice Information">
+              <FormKit type="form"  @submit="submitReportInfoData" submit-label="Submit Tax Invoice Information">
                 <p class="text-xl font-medium underline py-6">Company Information</p>
                 <FormKit v-model="customerInfo" type="group">
                   <FormKit
@@ -25,9 +25,10 @@
                     type="tel"
                     name="phoneNumber"
                     id="phoneNumber"
-                    validation="required|matches:/^[0-9]{3}[0-9]{3}[0-9]{4}$/|length:10"
+                    validation="required|matches:/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/|length:10"
                     label="Phone Number"
                     placeholder="xxx-xxx-xxxx"
+                    help="Format - xxx-xxx-xxxx"
                   />
                   <FormKit
                     type="text"
@@ -192,7 +193,7 @@ import { useReportInfoStore } from '~/store/report-info';
     posCity: 'Shimoga',
     posState: 'Karnataka',
     poNo: '',
-    dateOfSupply: dayjs(),
+    dateOfSupply: dayjs().format("YYYY-MM-DD"),
   });
   watch(
     () => [particularInfo.units, particularInfo.unitAmountInfo],
@@ -231,7 +232,7 @@ import { useReportInfoStore } from '~/store/report-info';
     reportData.particulars = reportDataStore.getParticulars;
     reportData.posCity = reportDataInfo.posCity;
     reportData.posState = reportDataInfo.posState;
-    reportData.dateOfSupply = reportDataInfo.dateOfSupply;
+    reportData.dateOfSupply = dayjs(reportDataInfo.dateOfSupply).format("YYYY-MM-DD");
     reportData.poNo = reportDataInfo.poNo;
     reportInfoData.reportData = reportData;
     reportInfoData = await reportDataStore.initiateReportData(reportInfoData);
