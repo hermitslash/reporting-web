@@ -74,8 +74,10 @@
   </section>
 </template>
 <script setup>
+import { storeToRefs } from 'pinia';
 import { useAuthStore } from '~/store/auth';
 const authStore = useAuthStore();
+const authStoreToRefs = storeToRefs(authStore);
 const credentials = reactive({
   username: '',
   password: '',
@@ -85,7 +87,7 @@ const signin = async () => {
    authStore.login(credentials.username, credentials.password);
 };
 onMounted(() => {
-  if (authStore.isTokenValid) {
+  if (authStoreToRefs.isTokenValid) {
     navigateTo('/');
   }
 });

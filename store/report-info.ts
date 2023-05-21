@@ -136,6 +136,21 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
           responseAs: 'response',
         });
         if (fileResourceResp.status === 200) {
+          const fileNameHeader = fileResourceResp.headers
+            .get('content-disposition')
+            .split('filename=')[1]
+            .split(';')[0];
+          const trimFileName = fileNameHeader.substring(
+            fileNameHeader.lastIndexOf('-') + 1
+          );
+          var fileURL = window.URL.createObjectURL(
+            new Blob([await fileResourceResp.blob()])
+          );
+          var fileLink = document.createElement('a');
+          fileLink.href = fileURL;
+          fileLink.setAttribute('download', trimFileName);
+          document.body.appendChild(fileLink);
+          fileLink.click();
           toast.info('File downloaded, Please check your downloads folder.');
         }
       } catch (err) {
