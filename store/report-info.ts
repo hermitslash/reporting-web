@@ -141,8 +141,9 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
             .split('filename=')[1]
             .split(';')[0];
           const trimFileName = fileNameHeader.substring(
-            fileNameHeader.lastIndexOf('-') + 1
+            fileNameHeader.lastIndexOf('/') + 1
           );
+          console.log(trimFileName);
           var fileURL = window.URL.createObjectURL(
             new Blob([await fileResourceResp.blob()])
           );
@@ -150,6 +151,7 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
           fileLink.href = fileURL;
           fileLink.setAttribute('download', trimFileName);
           document.body.appendChild(fileLink);
+          console.log(fileLink);
           fileLink.click();
           toast.info('File downloaded, Please check your downloads folder.');
         }
