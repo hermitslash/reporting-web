@@ -140,10 +140,9 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
             .get('content-disposition')
             .split('filename=')[1]
             .split(';')[0];
-          const trimFileName = fileNameHeader.substring(
-            fileNameHeader.lastIndexOf('/') + 1
-          );
-          console.log(trimFileName);
+          const trimFileName = fileNameHeader
+            .substring(fileNameHeader.lastIndexOf('/') + 1)
+            .replaceAll('"', '');
           var fileURL = window.URL.createObjectURL(
             new Blob([await fileResourceResp.blob()])
           );
@@ -151,7 +150,6 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
           fileLink.href = fileURL;
           fileLink.setAttribute('download', trimFileName);
           document.body.appendChild(fileLink);
-          console.log(fileLink);
           fileLink.click();
           toast.info('File downloaded, Please check your downloads folder.');
         }
