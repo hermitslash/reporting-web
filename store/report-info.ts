@@ -141,7 +141,7 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
             .split('filename=')[1]
             .split(';')[0];
           const trimFileName = fileNameHeader.substring(
-            fileNameHeader.lastIndexOf('-') + 1
+            fileNameHeader.lastIndexOf('/') + 1
           );
           var fileURL = window.URL.createObjectURL(
             new Blob([await fileResourceResp.blob()])
