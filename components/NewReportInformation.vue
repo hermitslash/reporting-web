@@ -25,7 +25,7 @@
                     type="tel"
                     name="phoneNumber"
                     id="phoneNumber"
-                    validation="required|matches:/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/|length:10"
+                    validation="required|matches:/^[0-9]{3}[0-9]{3}[0-9]{4}$/|length:10"
                     label="Phone Number"
                     placeholder="xxx-xxx-xxxx"
                   />
