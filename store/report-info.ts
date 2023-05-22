@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { mande } from 'mande';
-import { saveAs } from 'file-saver';
+import pkg from 'file-saver';
 import {
   AuthenticatedUser,
   CompanyInfo,
@@ -146,6 +146,7 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
           const reportBlob = new Blob([await fileResourceResp.blob()], {
             type: 'application/pdf',
           });
+          const { saveAs } = pkg;
           saveAs(reportBlob, trimFileName);
           // var fileURL = window.URL.createObjectURL(reportBlob);
           // var fileLink = document.createElement('a');
