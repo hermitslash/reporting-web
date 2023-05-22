@@ -2,7 +2,7 @@
     <section class="text-primary-500">
       <div class="grid md:grid-cols-2 md:gap-4">
             <div>
-              <FormKit type="form"  @submit="submitReportInfoData" submit-label="Submit Tax Invoice Information">
+              <FormKit type="form"  @submit="submitReportInfoData" submit-label="Submit Tax Invoice Information" netlify>
                 <p class="text-xl font-medium underline py-6">Company Information</p>
                 <FormKit v-model="customerInfo" type="group">
                   <FormKit
