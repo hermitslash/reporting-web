@@ -131,7 +131,7 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
           },
           headers: {
             Authorization: `Bearer ${authStore.getAccessToken}`,
-            Accept: 'application/pdf',
+            Accept: 'application/octet-stream',
           },
           responseAs: 'response',
         });
