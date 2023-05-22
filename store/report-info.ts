@@ -143,8 +143,10 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
           const trimFileName = fileNameHeader
             .substring(fileNameHeader.lastIndexOf('/') + 1)
             .replaceAll('"', '');
-          const reportBlob = new Blob([await fileResourceResp.blob()]);
-          saveAs(reportBlob, trimFileName, { type: 'application/pdf' });
+          const reportBlob = new Blob([await fileResourceResp.blob()], {
+            type: 'application/pdf',
+          });
+          saveAs(reportBlob, trimFileName);
           // var fileURL = window.URL.createObjectURL(reportBlob);
           // var fileLink = document.createElement('a');
           // fileLink.href = fileURL;
