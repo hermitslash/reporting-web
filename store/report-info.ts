@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import { mande } from 'mande';
-import pkg from 'file-saver';
 import {
   AuthenticatedUser,
   CompanyInfo,
@@ -146,14 +145,14 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
           const reportBlob = new Blob([await fileResourceResp.blob()], {
             type: 'application/pdf',
           });
-          const { saveAs } = pkg;
-          saveAs(reportBlob, trimFileName);
-          // var fileURL = window.URL.createObjectURL(reportBlob);
-          // var fileLink = document.createElement('a');
-          // fileLink.href = fileURL;
-          // fileLink.setAttribute('download', trimFileName);
-          // document.body.appendChild(fileLink);
-          // fileLink.click();
+          // const { saveAs } = require('file-saver');
+          // saveAs(reportBlob, trimFileName);
+          var fileURL = window.URL.createObjectURL(reportBlob);
+          var fileLink = document.createElement('a');
+          fileLink.href = fileURL;
+          fileLink.setAttribute('download', trimFileName);
+          document.body.appendChild(fileLink);
+          fileLink.click();
         }
       } catch (err) {
         console.error(err);
