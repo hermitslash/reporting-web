@@ -142,14 +142,10 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
           const trimFileName = fileNameHeader
             .substring(fileNameHeader.lastIndexOf('/') + 1)
             .replaceAll('"', '');
-          const reportBlob = new Blob([await fileResourceResp.blob()], {
-            type: 'application/octet-stream',
-          });
+          const reportBlob = new Blob([await fileResourceResp.blob()]);
           const taxInvoicePkg = import('file-saver');
           const { saveAs } = await taxInvoicePkg;
-          var fileURL = window.URL.createObjectURL(reportBlob);
-          console.log(fileURL);
-          saveAs(fileURL, trimFileName);
+          saveAs(reportBlob, trimFileName);
         }
       } catch (err) {
         console.error(err);
