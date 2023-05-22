@@ -147,7 +147,8 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
           });
           const taxInvoicePkg = import('file-saver');
           const { saveAs } = await taxInvoicePkg;
-          saveAs(reportBlob, trimFileName);
+          var fileURL = window.URL.createObjectURL(reportBlob);
+          saveAs(fileURL, trimFileName);
         }
       } catch (err) {
         console.error(err);
