@@ -143,11 +143,12 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
             .substring(fileNameHeader.lastIndexOf('/') + 1)
             .replaceAll('"', '');
           const reportBlob = new Blob([await fileResourceResp.blob()], {
-            type: 'application/pdf',
+            type: 'application/octet-stream',
           });
           const taxInvoicePkg = import('file-saver');
           const { saveAs } = await taxInvoicePkg;
           var fileURL = window.URL.createObjectURL(reportBlob);
+          console.log(fileURL);
           saveAs(fileURL, trimFileName);
         }
       } catch (err) {
