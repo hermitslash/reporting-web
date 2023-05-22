@@ -142,17 +142,15 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
           const trimFileName = fileNameHeader
             .substring(fileNameHeader.lastIndexOf('/') + 1)
             .replaceAll('"', '');
-          const reportBlob = new Blob([await fileResourceResp.blob()], {
-            type: 'application/pdf',
-          });
-          // const { saveAs } = require('file-saver');
-          // saveAs(reportBlob, trimFileName);
-          var fileURL = window.URL.createObjectURL(reportBlob);
-          var fileLink = document.createElement('a');
-          fileLink.href = fileURL;
-          fileLink.setAttribute('download', trimFileName);
-          document.body.appendChild(fileLink);
-          fileLink.click();
+          const reportBlob = new Blob([await fileResourceResp.blob()]);
+          const { saveAs } = require('file-saver');
+          saveAs(reportBlob, trimFileName);
+          // var fileURL = window.URL.createObjectURL(reportBlob);
+          // var fileLink = document.createElement('a');
+          // fileLink.href = fileURL;
+          // fileLink.setAttribute('download', trimFileName);
+          // document.body.appendChild(fileLink);
+          // fileLink.click();
         }
       } catch (err) {
         console.error(err);
