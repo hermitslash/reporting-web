@@ -143,7 +143,8 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
             .substring(fileNameHeader.lastIndexOf('/') + 1)
             .replaceAll('"', '');
           const reportBlob = new Blob([await fileResourceResp.blob()]);
-          const { saveAs } = require('file-saver');
+          const pkg = import('file-saver');
+          const { saveAs } = await pkg;
           saveAs(reportBlob, trimFileName);
           // var fileURL = window.URL.createObjectURL(reportBlob);
           // var fileLink = document.createElement('a');
