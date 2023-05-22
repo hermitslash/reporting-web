@@ -100,7 +100,7 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
           runtimeConfig.public.END_OF_DAY_TRANCS_URL
         ).get({
           query: {
-            currentDate: encodeURIComponent(currentDate)
+            currentDate: encodeURIComponent(currentDate),
           },
           headers: {
             Authorization: `Bearer ${authStore.getAccessToken}`,
@@ -118,11 +118,10 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
       }
     },
     async downloadReportInfoData(invoiceNo: string) {
-      toast.info('Trying to download the report to your downloads folder.');
       const runtimeConfig = useRuntimeConfig();
       const authStore = useAuthStore();
       const downloadReportInfo = mande(
-        runtimeConfig.public.DOWNLOAD_REPORT_INFO_URL 
+        runtimeConfig.public.DOWNLOAD_REPORT_INFO_URL
       );
       try {
         const fileResourceResp = await downloadReportInfo.get({
@@ -144,14 +143,15 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
             .substring(fileNameHeader.lastIndexOf('/') + 1)
             .replaceAll('"', '');
           var fileURL = window.URL.createObjectURL(
-            new Blob([await fileResourceResp.blob()])
+            new Blob([await fileResourceResp.blob()], {
+              type: 'application/pdf',
+            })
           );
           var fileLink = document.createElement('a');
           fileLink.href = fileURL;
           fileLink.setAttribute('download', trimFileName);
           document.body.appendChild(fileLink);
           fileLink.click();
-          toast.info('File downloaded, Please check your downloads folder.');
         }
       } catch (err) {
         console.error(err);
