@@ -136,7 +136,7 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
         });
         if (fileResourceResp.status === 200) {
           const fileNameHeader = fileResourceResp.headers
-            .get('content-disposition')
+            .get('content-disposition')!
             .split('filename=')[1]
             .split(';')[0];
           const trimFileName = fileNameHeader
@@ -144,7 +144,7 @@ export const useReportInfoStore = defineStore('reportInfoStore', {
             .replaceAll('"', '');
           var fileURL = window.URL.createObjectURL(
             new Blob([await fileResourceResp.blob()], {
-              type: 'application/pdf',
+              type: 'application/octet-stream',
             })
           );
           var fileLink = document.createElement('a');
