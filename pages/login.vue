@@ -87,7 +87,7 @@ const signin = async () => {
    authStore.login(credentials.username, credentials.password);
 };
 onMounted(() => {
-  if (authStoreToRefs.isTokenValid) {
+  if (authStoreToRefs.getIsValidToken) {
     navigateTo('/');
   }
 });

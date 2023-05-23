@@ -43,7 +43,7 @@ export const useAuthStore = defineStore('authStore', {
       this.access_token = '';
       this.user = {};
       this.isTokenValid = false;
-      return navigateTo('/login');
+      return navigateTo('/');
     },
   },
   getters: {
