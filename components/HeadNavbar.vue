@@ -78,14 +78,6 @@
             >
           </li>
         </template>
-        <template v-if="!isRouteLogin && !isAuthenticated">
-          <NuxtLink
-              to="/login"
-              active-class="active"
-              class="block py-2 pl-3 pr-4 text-blue-400 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-primary-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-              >Login</NuxtLink
-            >
-        </template>
         </ul>
       </div>
     </div>
@@ -94,8 +86,6 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '~/store/auth';
-const routes = useRoute();
-const isRouteLogin = routes.path === '/login';
 const authStore = useAuthStore();
 const authStoreRefs = storeToRefs(authStore);
 const isAuthenticated = authStoreRefs.getIsValidToken;

@@ -11,11 +11,13 @@
 import { onMounted } from 'vue';
 import { initFlowbite } from 'flowbite';
 import { useAuthStore } from './store/auth';
+import { storeToRefs } from 'pinia';
 const authStore = useAuthStore();
+const authStoreRefs = storeToRefs(authStore);
 onMounted(() => {
   initFlowbite();
   authStore.validateToken();
-  if(!authStore.getIsValidToken) {
+  if(!authStoreRefs.getIsValidToken) {
     authStore.logout();
   }
 });
