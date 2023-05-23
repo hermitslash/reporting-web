@@ -16,6 +16,12 @@ export default defineNuxtConfig({
   },
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
+    head: {
+      title: 'Reporting Services',
+      base: {
+        href: '/',
+      },
+    },
   },
   router: {
     options: {
@@ -34,15 +40,14 @@ export default defineNuxtConfig({
   ssr: false,
   runtimeConfig: {
     public: {
-      RS_BASE_URL: 'http://3.108.221.229',
-      AUTH_TOKEN_URL: `http://3.108.221.229/api/auth/token`,
-      AUTH_TOKEN_VALIDATE_URL: `http://3.108.221.229/api/auth/token/validate`,
-      USER_INFO_URL: `http://3.108.221.229/api/auth/userinfo`,
-      INITIATE_REPORT_URL: `http://3.108.221.229/api/reporting-svc/reportInfoData/initiate`,
-      ALL_REPORT_INFOS_URL: `http://3.108.221.229/api/reporting-svc/reportInfos`,
-      REPORT_INFO_BY_INVOICE_NO_URL: `http://3.108.221.229/api/reporting-svc/reportInfo`,
-      DOWNLOAD_REPORT_INFO_URL: `http://3.108.221.229/api/reporting-svc/download/reportInfo`,
-      END_OF_DAY_TRANCS_URL: `http://3.108.221.229/api/reporting-svc/end-of-day-transactions`,
+      AUTH_TOKEN_URL: `/api/auth/token`,
+      AUTH_TOKEN_VALIDATE_URL: `/api/auth/token/validate`,
+      USER_INFO_URL: `/api/auth/userinfo`,
+      INITIATE_REPORT_URL: `/api/reporting-svc/reportInfoData/initiate`,
+      ALL_REPORT_INFOS_URL: `/api/reporting-svc/reportInfos`,
+      REPORT_INFO_BY_INVOICE_NO_URL: `/api/reporting-svc/reportInfo`,
+      DOWNLOAD_REPORT_INFO_URL: `/api/reporting-svc/download/reportInfo`,
+      END_OF_DAY_TRANCS_URL: `/api/reporting-svc/end-of-day-transactions`,
     },
   },
 });
